@@ -68,6 +68,15 @@ form{
 
 }
 
+.btn-red{
+  border:0;
+  background-color: rgb(218, 64, 53);
+  padding: 5px 20px;
+  color: #fff;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
 .btn:hover{
   background-color: #ec7a2e;
   cursor: pointer;

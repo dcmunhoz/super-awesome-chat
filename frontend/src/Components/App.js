@@ -16,7 +16,6 @@ export default function App(){
 
         setTimeout(()=>{setContainer(showContainer)}, 100);
 
-        console.log(container);
 
     }, [user_logged]);
 

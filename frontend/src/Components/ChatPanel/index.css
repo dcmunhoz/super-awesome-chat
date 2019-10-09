@@ -1,0 +1,146 @@
+.aside-container {
+
+    width: 30%;
+    border-right: 1px solid #ddd;
+
+}
+
+.aside-container .user-details{
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.contacts-box header{
+    background-color: #eee;
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.contacts-box .contacts-list .contact-item{
+    padding: 10px 10px;
+    border-bottom: 1px solid #eee;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.contacts-box .contacts-list .contact-item:hover{
+    cursor: pointer;
+    background-color: #f9f9f9;
+}
+
+.message-box-container {
+    flex: 1;
+    
+}
+
+.message-box-container .message-contact{
+    background-color: #eee;
+    width: 100%;
+    padding: 15px 10px;
+    border-bottom: 1px solid #DDD;
+}
+
+.message-box{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.message-box .messages-container{
+    flex: 1;
+    position: relative;
+    display: block;
+}
+
+
+.messages-container .messages{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    overflow-y: auto;
+    padding: 8px;
+}
+
+.messages .message-row{
+    display: flex;
+    width: 100%;
+    position: relative;
+    margin-bottom: 5px;
+    justify-content: flex-end;
+}
+
+.messages .message-row.out{
+    justify-content: flex-start;
+}
+
+.message-row .message-body{
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    max-width: 80%;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    background-color: rgb(158, 197, 255);
+    border: 1px solid rgb(109, 167, 255);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+
+}
+
+.message-row.out .message-body{
+    background-color: #eee;
+    border: 1px solid #ddd;
+}
+
+.message-body footer{
+    display: flex;
+    justify-content: flex-end;
+    font-weight: bolder;
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+.message-box .footer-input{
+    padding: 10px;
+    border-top: 1px solid #ddd;
+}
+
+.message-box .footer-input form {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.message-box .footer-input form input {
+    width: 90%;
+    border: 1px solid #9c9c9c;
+    border-radius: 5px;
+    height: 35px;
+    padding: 0 10px;
+}
+
+.message-box .footer-input form button {
+    border-radius: 100%;
+    border: 0;
+    background-color: #3383FA;
+}
+
+.message-box .footer-input form button i{
+    font-size: 18px;
+    width: 35px;
+    height: 20px;
+    color: #fff;
+    position: relative;
+    left: 2px;
+    top:  0px;
+    transform: rotate(-35deg);
+}
