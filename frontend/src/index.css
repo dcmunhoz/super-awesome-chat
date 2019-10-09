@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: 'Open Sans';
+  color: #3b3b3b;
+  outline: 0;
+}
+
+html, body, #root {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background: linear-gradient(180deg, #3383fa 70%, #eee 70%);
+}
+
+#app{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+form{
+  width: 80%;
+}
+
+.form-group{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.form-login .form-group input{
+
+  height: 35px;
+  padding: 0 10px;
+  font-size: 14px;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  transition: 100ms;
+
+}
+
+.form-login .form-group input:focus{
+
+  border: 1px solid #2a78ec;
+
+}
+
+.btn {
+  width: 100%;
+  background-color: #fa8333;
+  border: 1px solid #fa8333;
+  border-radius: 3px;
+  height: 45px;
+  font-weight: bold;
+  font-size: 18px;
+  color: #FFF;
+  transition: 100ms;
+
+
+}
+
+.btn:hover{
+  background-color: #ec7a2e;
+  cursor: pointer;
+}
