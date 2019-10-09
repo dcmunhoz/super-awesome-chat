@@ -6,7 +6,10 @@
   display: flex;
   flex-direction: row;
   overflow: hidden;
-  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, .15)
+  box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, .15);
+  animation-name: showin;
+  animation-duration: 300ms;
+  animation-fill-mode: backwards;
 }
 
 @media (max-width: 992px){
@@ -15,6 +18,31 @@
         width: 100%;
         height: 100%;
         border-radius: 0;
+        animation-name: showout;
     }
+
+}
+
+@keyframes showin{
+  
+  from { 
+    transform: scale(1.1);
+    opacity: 0;
+  } to {
+    transform: scale(1);
+    opacity: 1;
+  };
+
+}
+
+@keyframes showout{
+  
+  from { 
+    transform: scale(0.9);
+    opacity: 0;
+  } to {
+    transform: scale(1);
+    opacity: 1;
+  };
 
 }

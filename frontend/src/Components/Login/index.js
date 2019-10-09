@@ -1,7 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import './index.css';
 
 export default function Login() {
+    const [login, setLogin] = useState('');
+    const [password, setPassword] = useState('');
+    const dispatch = useDispatch();
+
+    function handleLogin(e) {
+
+        e.preventDefault();
+
+        dispatch({
+            type: 'ACTION_USER_LOGIN',
+            data: true
+        });
+        
+    }
 
     return(
         <>
@@ -19,6 +34,8 @@ export default function Login() {
                             type="email" 
                             id="login" 
                             placeholder='Seu e-mail super maneiro'
+                            value={login}
+                            onChange={e => setLogin(e.target.value)}
                         />
                     </div>
 
@@ -28,10 +45,12 @@ export default function Login() {
                             type="text" 
                             id="password" 
                             placeholder='Sua senha super secreta'
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
                         />
                     </div>
 
-                    <button className='btn'>
+                    <button className='btn' onClick={handleLogin}>
                         Entrar
                     </button>
 
