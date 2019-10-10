@@ -16,7 +16,7 @@ module.exports = {
 
             } else {
 
-                return res.status(400).json({message: 'Wrong password !'})
+                return res.status(500).json({message: 'Ooops, Wrong password =['})
 
             }
 

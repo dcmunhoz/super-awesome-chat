@@ -7,6 +7,9 @@ export default function ChatPanel() {
     const dispatch = useDispatch();
 
     function handleSignout() {
+
+        localStorage.removeItem('user');
+        
         dispatch({
             type: 'ACTION_USER_LOGIN',
             data: false

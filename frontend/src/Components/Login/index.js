@@ -1,20 +1,63 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import './index.css';
 
+import api from '../../Utils/api';
+
 export default function Login() {
-    const [login, setLogin] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
 
-    function handleLogin(e) {
+    useEffect(() => {
+        const user = localStorage.getItem('user')
+
+        if (user) {
+            
+            dispatch({
+                type: 'ACTION_USER_LOGIN',
+                data: true
+            });
+
+        }
+
+    }, []);
+
+    async function handleLogin(e) {
 
         e.preventDefault();
 
-        dispatch({
-            type: 'ACTION_USER_LOGIN',
-            data: true
-        });
+        if (!email || !password){
+
+            alert('E-mail e senha devem ser informados');
+            return;
+        }
+
+        try {
+
+            const response = await api.get('/session', {
+                headers: {
+                    email,
+                    password
+                }
+            });
+
+            localStorage.setItem('user', JSON.stringify(response.data))
+            
+            dispatch({
+                type: 'ACTION_USER_LOGIN',
+                data: true
+            });
+
+
+        } catch (err) {
+
+            console.clear();
+
+            alert("Ooooops ! Usuário e/ou senha invalidos =[");
+
+        } 
+
         
     }
 
@@ -34,8 +77,8 @@ export default function Login() {
                             type="email" 
                             id="login" 
                             placeholder='Seu e-mail super maneiro'
-                            value={login}
-                            onChange={e => setLogin(e.target.value)}
+                            value={email}
+                            onChange={e => setEmail(e.target.value)}
                         />
                     </div>
 
