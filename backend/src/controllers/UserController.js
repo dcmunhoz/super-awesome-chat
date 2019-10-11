@@ -2,9 +2,23 @@ const User = require('../model/User');
 
 module.exports = {
 
+    async index(req, res){
+
+        const { user_id } = req.params;
+
+        const user = await User.findOne({_id: user_id});
+
+        if (user) {
+
+            res.json(user);
+
+        }
+
+    },
+
     async newContact(req, res){
 
-        const { email } = req.query;
+        const { email } = req.body;
         const { user_id } = req.headers;        
 
         let user = await User.findOne({ _id: user_id }).populate('contacts');
