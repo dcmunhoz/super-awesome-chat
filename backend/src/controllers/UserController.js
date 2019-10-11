@@ -2,11 +2,63 @@ const User = require('../model/User');
 
 module.exports = {
 
+    async newContact(req, res){
+
+        const { email } = req.query;
+        const { user_id } = req.headers;        
+
+        let user = await User.findOne({ _id: user_id }).populate('contacts');
+
+        if (user) {
+            
+            const contact = await User.findOne({ email });
+            let exists = false;
+
+            if (contact) {
+
+                if (user.contacts.length > 0) {
+                    user.contacts.map(ucontact => {
+
+                        if (ucontact._id.toString() == contact._id.toString()) {
+                            exists = true;
+                        }
+
+                    });
+
+                    if (!exists) {
+
+                        user.contacts = [...user.contacts, contact._id];
+    
+                        await user.save();
+                    }
+
+                } else {
+
+                    user.contacts = [...user.contacts, contact._id];
+
+
+                    await user.save();
+                }
+
+
+            }
+
+            // user.contacts = [...user.contacts, contact._id];
+            // user.save();
+            user = await User.findOne({ _id: user_id }).populate('contacts');
+            res.json(user);
+
+        }else{
+            console.log('nop');
+        }
+
+    },
+
     async session(req, res){
 
         const { email, password } = req.headers;        
 
-        let user = await User.findOne({ email });
+        let user = await User.findOne({ email }).populate('contacts');
 
         if (user) {
 

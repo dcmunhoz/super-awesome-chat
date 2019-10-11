@@ -8,5 +8,6 @@ router.get('/', (req, res) => {
 
 /** User routes */
 router.get('/session', UserController.session);
+router.get('/user', UserController.newContact);
 
 module.exports = router;

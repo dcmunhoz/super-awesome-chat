@@ -10,13 +10,16 @@ export default function Login() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const user = localStorage.getItem('user')
+        const user = JSON.parse(localStorage.getItem('user'));
 
         if (user) {
             
             dispatch({
                 type: 'ACTION_USER_LOGIN',
-                data: true
+                data: {
+                    logged: true,
+                    user
+                }
             });
 
         }
@@ -43,10 +46,14 @@ export default function Login() {
             });
 
             localStorage.setItem('user', JSON.stringify(response.data))
-            
+
+
             dispatch({
                 type: 'ACTION_USER_LOGIN',
-                data: true
+                data: {
+                    logged: true,
+                    user: response.data
+                }
             });
 
 

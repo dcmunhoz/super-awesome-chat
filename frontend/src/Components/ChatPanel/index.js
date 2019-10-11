@@ -1,26 +1,57 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import './index.css';
+import api from '../../Utils/api';
 
 export default function ChatPanel() {
-    const { user_logged } = useSelector(store => store.user);
+    const { user } = useSelector(store => store.user);
     const dispatch = useDispatch();
 
     function handleSignout() {
 
         localStorage.removeItem('user');
-        
+        console.log(localStorage);
         dispatch({
             type: 'ACTION_USER_LOGIN',
-            data: false
+            data: {
+                logged:false,
+                user: {
+                    email: '',
+                    contacts: []
+                }
+            }
         })
+    }
+
+    async function handleShowNewContactPanel() {
+
+        const email = prompt("Digite um email para adicionar a sua lista de contatos");
+
+        const response = await api.get(`/user?email=${email}`, {
+            headers:{
+                user_id: user._id
+            }
+        });
+
+
+        await dispatch({
+            type: 'ACTION_USER_NEW_CONTACT',
+            data: {
+                user: response.data
+            }
+        });
+
+        localStorage.removeItem('user');
+        localStorage.setItem('user', JSON.stringify(response.data));
+
+
     }
 
     return(
         <>
             <aside className='aside-container'>
                 <header className='user-details'>
-                    <span>Daniel Munhoz</span>
+                    <span>{user.email}</span>
 
                     <button className='btn-red' onClick={handleSignout}>Sair</button>
                 </header>
@@ -28,20 +59,22 @@ export default function ChatPanel() {
                 <div className='contacts-box'>
                     <header>
                         <h4>Contatos</h4>
+                        <button 
+                            className="btn-red"
+                            onClick={handleShowNewContactPanel}
+                        >
+                            novo
+                        </button>
                     </header>
 
                     <div className='contacts-list'>
-                        <div className="contact-item">
-                            <span>Daniel Costa Munhoz</span>    
-                        </div>     
 
-                        <div className="contact-item">
-                            <span>Usuário 2</span>    
-                        </div>     
+                        { user.contacts.map(contact => (
+                            <div className="contact-item" key={contact._id}>
+                                <span>{contact.email}</span>    
+                            </div> 
+                        )) }
 
-                        <div className="contact-item">
-                            <span>Usuário 3</span>    
-                        </div>                        
                     </div>
                 </div>
             </aside>
