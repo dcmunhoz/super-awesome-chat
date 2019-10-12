@@ -7,52 +7,25 @@ const socketio = require('socket.io-client');
 
 export default function ChatPanel() {
     const { user, active_chat } = useSelector(store => store.user);
-    const [messages, setMessages] = useState([]);
+    const [activeId, setActiveId] = useState('');
     const [sendMessage, setSendMessage] = useState('');
     const dispatch = useDispatch();
 
-    const socket = useMemo(() => socketio.connect(`http://localhost:3003`, { query: {user_id: user._id} }), []);
+    const socket = useMemo(() => socketio.connect(`http://localhost:3003`, { query: {user_id: user._id} }), [user._id]);
 
     useEffect(() => {
 
         socket.on('RECIVED_MESSAGE', data => {
-
-            console.log(active_chat);
-
-            if (active_chat._id == data.from) {
+    
+            if (activeId == data.from) {
                 dispatch({
                     type: 'NEW_MESSAGE_RECIVED',
                     data: data 
                 })
             }
-    
         });
 
-    }, [active_chat]);
-
-    socket.on('RECIVED_MESSAGE', data => {
-
-        // console.log(active_chat)
-
-            // dispatch({
-            //     type: 'NEW_MESSAGE_RECIVED',
-            //     data: data.message 
-            // });
-
-    });
-
-    useEffect(() => {
-        
-        
-        
-    }, [active_chat]);
-    
-
-    useEffect(()=>{
-        
-        setMessages(renderMessages);
-
-    }, [active_chat.messages]);
+    }, [activeId]);
 
     function handleSignout() {
 
@@ -99,9 +72,6 @@ export default function ChatPanel() {
 
         const response = await api.get(`/user/${user_id}`, { user_id });
 
-        const sendData = response.data;
-        sendData.messages = active_chat.messages;
-
         await dispatch({
             type: 'ACTION_CHANGE_ACTIVE_CHAT',
             data: {
@@ -109,25 +79,8 @@ export default function ChatPanel() {
             }
         });
 
-    }
+        setActiveId(response.data._id);
 
-    function renderMessages() {
-        if (active_chat.messages) {
-            return (
-                active_chat.messages.map(message => (
-                    <div className={`message-row ${message.from != user._id ? 'out' : ''} `} key={`${message.body}-${message.hora}`}>
-                        <div className="message-body" >
-                            <div className='message-content'>
-                                { message.body }
-                            </div>
-                            <footer>
-                                { message.hora }
-                            </footer>
-                        </div>
-                    </div> 
-                ))
-            )
-        }
     }
 
     async function handleSendMessage(e) {
@@ -153,6 +106,8 @@ export default function ChatPanel() {
             type: 'NEW_CHAT_MESSSAGE',
             data: message 
         });
+
+        setSendMessage('');
 
         socket.emit('NEW_MESSAGE', { message });
 
@@ -192,28 +147,28 @@ export default function ChatPanel() {
 
             <div className='message-box-container'>
                 <header className='message-contact'>
-                    Conversando com { active_chat.email ? active_chat.email : 'ninguem' }
+                    Conversando com <strong>{ active_chat.email ? active_chat.email : 'ninguem' }</strong>
                 </header>
                 <div className='message-box'>
                     <div className='messages-container'>
 
                         <div className="messages">
 
-                            {messages}
-
-
-                            {/* <div className="message-row">
-                                <div className="message-body">
-                                    <div className='message-content'>
-                                        Olá mensagem
-                                    </div>
-                                    <footer>
-                                        22:35
-                                    </footer>
-                                </div>
-                            </div> */}
-
-                            
+                            {active_chat.messages.map(message => {
+                                console.log();
+                                return(
+                                    <div className={`message-row ${message.from != user._id ? 'out' : ''} `} key={`${message.body}-${Math.random()}`}>
+                                        <div className="message-body" >
+                                            <div className='message-content'>
+                                                { message.body }
+                                            </div>
+                                            <footer>
+                                                { message.hora }
+                                            </footer>
+                                        </div>
+                                    </div> 
+                                )
+                            })}                           
                             
                         </div>
 
